@@ -1,8 +1,6 @@
 package com.mymoney;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.Optional;
 
 public class Wallet {
     private Money balance;
@@ -34,7 +32,7 @@ public class Wallet {
     }
 
     public Map<TransactionType, Money> getSummary() {
-        Map<TransactionType, Money> summary = new HashMap<>();
+        Map<TransactionType, Money> summary = new EnumMap<>(TransactionType.class);
         summary.put(TransactionType.TOPUP, new Money(0));
         summary.put(TransactionType.PAYMENT, new Money(0));
 
@@ -42,12 +40,12 @@ public class Wallet {
             summary.put(t.type(), summary.get(t.type()).plus(t.amount()));
         }
 
-        return summary;
+        return Map.copyOf(summary);
     }
 
-    public Transaction getLargestTransaction() {
+    public Optional<Transaction> getLargestTransaction() {
         if (history.isEmpty()) {
-            return null;
+            return Optional.empty();
         }
 
         Transaction largest = history.get(0);
@@ -57,6 +55,6 @@ public class Wallet {
             }
         }
 
-        return largest;
+        return Optional.of(largest);
     }
 }
