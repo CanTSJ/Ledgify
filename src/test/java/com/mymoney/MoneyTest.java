@@ -6,14 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoneyTest {
 
     @Test
-    void createNegative_throws() {
+    void createNegativeMoney_throws() {
         assertThrows(IllegalArgumentException.class, () -> new Money(-1));
     }
 
     @Test
     void toString_5satang() {
-        Money m = new Money(5000);
-        assertEquals("50.00 baht", m.toString());
+        Money m = new Money(5);
+        assertEquals("0.05 baht", m.toString());
     }
 
     @Test
